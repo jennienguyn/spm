@@ -21,6 +21,13 @@ jobs:
       - name: Build EXE
         run: gcc src/*.c app.res -Iinclude -mwindows -o spm.exe
 
+      - name: Check GH auth
+        env:
+          GH_TOKEN: ${{ secrets.REPO_TOKEN }}
+        run: gh auth status
+        shell: pwsh
+
+
       - name: Create GitHub release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
