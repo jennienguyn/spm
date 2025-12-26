@@ -16,7 +16,7 @@ jobs:
       run: echo "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin" >> $env:GITHUB_PATH
 
     - name: Build resource (icon)
-      run: windres app.rc app.res
+      run: windres src/app.rc app.res
 
     - name: Build EXE
       run: |
