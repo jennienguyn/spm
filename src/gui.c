@@ -19,6 +19,10 @@ void tray_add(HWND hwnd) {
     Shell_NotifyIcon(NIM_ADD, &nid);
 }
 
+void tray_remove() {
+    Shell_NotifyIcon(NIM_DELETE, &nid);
+}
+
 void tray_menu(HWND hwnd) {
     POINT p;
     GetCursorPos(&p);
