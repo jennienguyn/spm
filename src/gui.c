@@ -1,8 +1,8 @@
-#include <shellapi.h>
-
 #include "gui.h"
 #include "config.h"
 #include "autostart.h"
+
+#include <shellapi.h>
 
 static AppConfig cfg;
 NOTIFYICONDATA nid;
