@@ -7,23 +7,37 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Install MinGW
-      run: choco install mingw -y
+      - name: Install MinGW
+        run: choco install mingw -y
 
-    - name: Add MinGW to PATH
-      run: echo "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin" >> $env:GITHUB_PATH
+      - name: Add MinGW to PATH
+        run: echo "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin" >> $env:GITHUB_PATH
 
-    - name: Build resource (icon)
-      run: windres -O coff src/app.rc app.res
+      - name: Build resource (icon)
+        run: windres -O coff src/app.rc app.res
 
-    - name: Build EXE
-      run: |
-        gcc src/*.c app.res -Iinclude -mwindows -o spm.exe
+      - name: Build EXE
+        run: gcc src/*.c app.res -Iinclude -mwindows -o spm.exe
 
-    - name: Upload EXE
-      uses: actions/upload-artifact@v4
-      with:
-        name: SAMPProofManager
-        path: spm.exe
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          tag_name: v1.0.0
+          release_name: SPM v1.0.0
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload EXE to Release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./spm.exe
+          asset_name: spm.exe
+          asset_content_type: application/octet-stream
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
