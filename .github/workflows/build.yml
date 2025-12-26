@@ -23,7 +23,7 @@ jobs:
 
       - name: Check GH auth
         env:
-          GH_TOKEN: ${{ secrets.REPO_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh auth status
         shell: pwsh
 
