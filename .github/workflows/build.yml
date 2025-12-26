@@ -1,0 +1,30 @@
+name: Build EXE
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install MinGW
+      run: choco install mingw -y
+
+    - name: Add MinGW to PATH
+      run: echo "C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin" >> $env:GITHUB_PATH
+
+    - name: Build resource (icon)
+      run: windres app.rc app.res
+
+    - name: Build EXE
+      run: |
+        gcc main.c gui.c config.c watcher.c utils.c autostart.c app.res `
+            -mwindows -o spm.exe
+
+    - name: Upload EXE
+      uses: actions/upload-artifact@v4
+      with:
+        name: SAMPProofManager
+        path: spm.exe
