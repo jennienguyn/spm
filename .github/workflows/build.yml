@@ -20,8 +20,7 @@ jobs:
 
     - name: Build EXE
       run: |
-        gcc main.c gui.c config.c watcher.c utils.c autostart.c app.res `
-            -mwindows -o spm.exe
+        gcc src/*.c app.res -Iinclude -mwindows -o spm.exe
 
     - name: Upload EXE
       uses: actions/upload-artifact@v4
