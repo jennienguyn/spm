@@ -7,8 +7,11 @@
 
 #define ID_TRAY_OPEN  1001
 #define ID_TRAY_EXIT  1002
-#define IDI_APPICON 101
+#define IDI_APPICON   101
 
 int run_gui(HINSTANCE hInst);
+
+void tray_add(HWND hwnd);
+void tray_remove(void);
 
 #endif
